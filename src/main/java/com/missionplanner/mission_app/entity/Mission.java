@@ -33,20 +33,46 @@ public class Mission {
     @Column(name = "Equipment_level")
     private String equipmentLevel;
 
+    @Column(name = "operative_name")
+    private String operativeName;
 
+    @Column (name= "Budget")
+    private  Double Budget;
+
+    @Column (name = "Activity_Status")
+    private Boolean isActive;
+
+    @Column (name="access_Password")
+    private String password;
+
+    @Column(name="Allowed_Clearancelevel")
+    private String allowedClearanceLevel;
+
+    @Column(name = "Live_Feed_Url")
+    private String liveFeedUrl;
+
+    @Column(name = "Is_Live_Enabled")
+    private Boolean isLiveEnabled;
 //Constructors
 
     public Mission() {
     }
 
-    public Mission(String missionName, String location, String terrain, String weather, Integer duration, String missionType, String equipmentLevel) {
-        this.missionName = missionName;
+    public Mission(String location, String missionName, String terrain, String weather, Integer duration, String missionType, String equipmentLevel, String operativeName, Double budget, Boolean isActive, String password, String allowedClearanceLevel, String liveFeedUrl,  Boolean isLiveEnabled) {
         this.location = location;
+        this.missionName = missionName;
         this.terrain = terrain;
         this.weather = weather;
         this.duration = duration;
         this.missionType = missionType;
         this.equipmentLevel = equipmentLevel;
+        this.operativeName = operativeName;
+        Budget = budget;
+        this.isActive = isActive;
+        this.password = password;
+        this.allowedClearanceLevel = allowedClearanceLevel;
+        this.liveFeedUrl = liveFeedUrl;
+        this.isLiveEnabled = isLiveEnabled;
     }
 
     //Getters and Setters
@@ -115,8 +141,62 @@ public class Mission {
         this.equipmentLevel = equipmentLevel;
     }
 
+    public String getOperativeName() {
+        return operativeName;
+    }
 
-    //TO String
+    public void setOperativeName(String operativeName) {
+        this.operativeName = operativeName;
+    }
+
+    public Double getBudget() {
+        return Budget;
+    }
+
+    public void setBudget(Double budget) {
+        Budget = budget;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getAllowedClearanceLevel() {
+        return allowedClearanceLevel;
+    }
+
+    public void setAllowedClearanceLevel(String allowedClearanceLevel) {
+        this.allowedClearanceLevel = allowedClearanceLevel;
+    }
+
+    public String getLiveFeedUrl() {
+        return liveFeedUrl;
+    }
+
+    public void setLiveFeedUrl(String liveFeedUrl) {
+        this.liveFeedUrl = liveFeedUrl;
+    }
+
+    public  Boolean isLiveEnabled() {
+        return isLiveEnabled;
+    }
+
+    public void setLiveEnabled(boolean liveEnabled) {
+        isLiveEnabled = liveEnabled;
+    }
+//TO String
 
 
     @Override
@@ -126,10 +206,17 @@ public class Mission {
                 ", missionName='" + missionName + '\'' +
                 ", location='" + location + '\'' +
                 ", terrain='" + terrain + '\'' +
-                ", Weather='" + weather + '\'' +
+                ", weather='" + weather + '\'' +
                 ", duration=" + duration +
                 ", missionType='" + missionType + '\'' +
                 ", equipmentLevel='" + equipmentLevel + '\'' +
+                ", operativeName='" + operativeName + '\'' +
+                ", Budget=" + Budget +
+                ", isActive=" + isActive +
+                ", password='" + password + '\'' +
+                ", allowedClearanceLevel='" + allowedClearanceLevel + '\'' +
+                ", liveFeedUrl='" + liveFeedUrl + '\'' +
+                ", isLiveEnabled=" + isLiveEnabled +
                 '}';
     }
 }
