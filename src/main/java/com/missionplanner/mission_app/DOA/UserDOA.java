@@ -1,13 +1,23 @@
 package com.missionplanner.mission_app.DOA;
 
-import com.missionplanner.mission_app.entity.Users;
-
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.*;
+import com.missionplanner.mission_app.entity.User;
 
 public interface UserDOA {
+    User findByIssuedId(String empId);
 
-    List< Users>findByIssuedId(int given_id );
-    void deleteByIssuedId(int id);
-    List<Users>findByName(String name);
-    List<Users>employeeStatus(String status);
+    List<User> findAllByStatus(String status);
+
+    List<User> findByName(String name);
+
+    void updateUserStatus(String empId, String newStatus);
+
+    void updateUserAccessLevel(String empId, int newLevel);
+
+    void updateUserTitle(String empId , String newStatus);
+
+    void setUserTermination(String empId, Timestamp terminatedAt);
+
+
 }

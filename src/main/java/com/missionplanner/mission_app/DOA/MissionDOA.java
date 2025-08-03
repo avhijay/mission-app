@@ -11,8 +11,10 @@ public interface MissionDOA {
 
     List<Mission>missionStatus(Boolean status);
 
+    Mission findById(int id);
 
+    void updateMissionStaus(String missionName,String newStatus);
 
-
+    void deleteSingleMission(int id);
 
 }

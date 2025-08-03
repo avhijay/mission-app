@@ -56,6 +56,30 @@ public class MissionDOAImpl implements MissionDOA {
         return theQuery.getResultList();
     }
 
+    @Override
+    public Mission findById(int id) {
+      return  entityManager.find(Mission.class,id);
+
+    }
+
+    @Override
+    public void updateMissionStaus(String missionName, String newStatus) {
+        TypedQuery<Mission> myQuery=entityManager.createQuery("FROM Mission WHERE missionName =:theData",Mission.class);
+        myQuery.setParameter("theData",missionName);
+        Mission mission =myQuery.getSingleResult();
+        mission.setStatus(newStatus);
+    }
+@Transactional
+    @Override
+    public void deleteSingleMission(int id) {
+      Mission mission =entityManager.find(Mission.class,id);
+      if (mission!=null){
+          entityManager.remove(mission);
+      }else{
+          System.out.println("No Mission found");
+      }
+    }
+
 
 }
 

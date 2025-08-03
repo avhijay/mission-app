@@ -40,7 +40,7 @@ public class Mission {
     private  Double Budget;
 
     @Column (name = "Activity_Status")
-    private Boolean isActive;
+    private String status;
 
     @Column (name="access_Password")
     private String password;
@@ -58,7 +58,7 @@ public class Mission {
     public Mission() {
     }
 
-    public Mission(String location, String missionName, String terrain, String weather, Integer duration, String missionType, String equipmentLevel, String operativeName, Double budget, Boolean isActive, String password, String allowedClearanceLevel, String liveFeedUrl,  Boolean isLiveEnabled) {
+    public Mission(String location, String missionName, String terrain, String weather, Integer duration, String missionType, String equipmentLevel, String operativeName, Double budget, String status, String password, String allowedClearanceLevel, String liveFeedUrl,  Boolean isLiveEnabled) {
         this.location = location;
         this.missionName = missionName;
         this.terrain = terrain;
@@ -68,7 +68,7 @@ public class Mission {
         this.equipmentLevel = equipmentLevel;
         this.operativeName = operativeName;
         Budget = budget;
-        this.isActive = isActive;
+        this.status = status;
         this.password = password;
         this.allowedClearanceLevel = allowedClearanceLevel;
         this.liveFeedUrl = liveFeedUrl;
@@ -93,12 +93,12 @@ public class Mission {
         this.missionName = missionName;
     }
 
-    public String getLocation() {
-        return location;
+    public Integer getDuration() {
+        return duration;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
     public String getTerrain() {
@@ -109,20 +109,20 @@ public class Mission {
         this.terrain = terrain;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public String getWeather() {
         return weather;
     }
 
     public void setWeather(String weather) {
         this.weather = weather;
-    }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
     }
 
     public String getMissionType() {
@@ -141,36 +141,12 @@ public class Mission {
         this.equipmentLevel = equipmentLevel;
     }
 
-    public String getOperativeName() {
-        return operativeName;
-    }
-
-    public void setOperativeName(String operativeName) {
-        this.operativeName = operativeName;
-    }
-
     public Double getBudget() {
         return Budget;
     }
 
     public void setBudget(Double budget) {
         Budget = budget;
-    }
-
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getAllowedClearanceLevel() {
@@ -181,6 +157,14 @@ public class Mission {
         this.allowedClearanceLevel = allowedClearanceLevel;
     }
 
+    public Boolean getLiveEnabled() {
+        return isLiveEnabled;
+    }
+
+    public void setLiveEnabled(Boolean liveEnabled) {
+        isLiveEnabled = liveEnabled;
+    }
+
     public String getLiveFeedUrl() {
         return liveFeedUrl;
     }
@@ -189,13 +173,31 @@ public class Mission {
         this.liveFeedUrl = liveFeedUrl;
     }
 
-    public  Boolean isLiveEnabled() {
-        return isLiveEnabled;
+    public String getPassword() {
+        return password;
     }
 
-    public void setLiveEnabled(boolean liveEnabled) {
-        isLiveEnabled = liveEnabled;
+    public void setPassword(String password) {
+        this.password = password;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getOperativeName() {
+        return operativeName;
+    }
+
+    public void setOperativeName(String operativeName) {
+        this.operativeName = operativeName;
+    }
+
+
 //TO String
 
 
@@ -212,7 +214,7 @@ public class Mission {
                 ", equipmentLevel='" + equipmentLevel + '\'' +
                 ", operativeName='" + operativeName + '\'' +
                 ", Budget=" + Budget +
-                ", isActive=" + isActive +
+                ", status='" + status + '\'' +
                 ", password='" + password + '\'' +
                 ", allowedClearanceLevel='" + allowedClearanceLevel + '\'' +
                 ", liveFeedUrl='" + liveFeedUrl + '\'' +

@@ -29,10 +29,16 @@ public class MissionAppApplication {
 		//findingMissionByLocation(missionDOA);
 		//	statusOfMission(missionDOA);
 
+			//removeMissionByIndx(missionDOA);
+
 
 	//WARNING
 //deleteAllData(missionRepository);
 		};
+	}
+
+	private void removeMissionByIndx(MissionDOA missionDOA) {
+		missionDOA.deleteSingleMission(2);
 	}
 
 	private void statusOfMission(MissionDOA missionDOA) {
@@ -64,7 +70,7 @@ public class MissionAppApplication {
 	}
 
 	private void saveMission(MissionRepository missionRepository) {
-		Mission mission1= new Mission("Sharha","Combat4","Desert","extreme Heat waves",900,"Combat","Hard","name1, name 2, name 3, name 4",782272.000,false,"SECUREDPASSWORD","LEVEL 2"," Available",true);
+		Mission mission1= new Mission("UNKNOWN","Combat5","SAND","extreme Heat waves",900,"Combat","Hard","name1, name 2, name 3, name 4",782272.000,"active","SECUREDPASSWORD","1 STAR"," Available",true);
 		System.out.println("Saving new mission");
 		missionRepository.save(mission1);
 	}
