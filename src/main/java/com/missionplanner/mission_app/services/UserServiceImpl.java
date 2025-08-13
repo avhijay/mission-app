@@ -1,21 +1,27 @@
 package com.missionplanner.mission_app.services;
 
-import com.missionplanner.mission_app.DOA.UserDOA;
+import com.missionplanner.mission_app.DAO.UserDOA;
 import com.missionplanner.mission_app.entity.User;
 import com.missionplanner.mission_app.respository.UserRespository;
+import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
-
+@Service
 public class UserServiceImpl implements UserService {
 
+    Timestamp now = new Timestamp(System.currentTimeMillis());
+
+    private AccessService accessService;
     private UserDOA userDOA;
-    public UserServiceImpl(UserDOA userDOA1){
-        this.userDOA=userDOA1;
-    }
    private UserRespository userRespository;
-    public  UserServiceImpl(UserRespository userRespository){
-        this.userRespository=userRespository;
-    }
+   public UserServiceImpl(AccessService accessService, UserDOA userDOA,UserRespository userRespository){
+       this.accessService=accessService;
+       this.userDOA =userDOA;
+       this.userRespository=userRespository;
+   }
+
+
 
 
 
@@ -57,14 +63,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean hasAccessToMission(String empId, int requiredLevel) {
+    public boolean hasAccessToMission(String empId,   int requiredLevel,String MissionName ){
         User user = userDOA.findByIssuedId(empId);
         if (user.getAccessLevel()>=requiredLevel){
+            accessService.log(empId,MissionName,now,"unknown_action",true,"Null");
             return true;
         }else {
+            accessService.log(empId,MissionName,now,"unknown_action",false,"Not enough clearance level or invalid Inputs");
             return false;
         }
     }
 
-
+    @Override
+    public boolean hasAdminPrivilege(String empId) {
+       int accessLevel=userDOA.getAccessLvl(empId);
+       if (accessLevel>=6){
+           return true;
+       }else return false;
+    }
 }

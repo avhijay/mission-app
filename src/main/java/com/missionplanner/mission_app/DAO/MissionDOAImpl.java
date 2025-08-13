@@ -1,12 +1,15 @@
-package com.missionplanner.mission_app.DOA;
+package com.missionplanner.mission_app.DAO;
 
+import com.missionplanner.mission_app.services.AccessService;
 import com.missionplanner.mission_app.entity.Mission;
+import com.missionplanner.mission_app.services.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import org.hibernate.boot.model.source.internal.hbm.AttributesHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -15,11 +18,17 @@ public class MissionDOAImpl implements MissionDOA {
     //define field for entity Manager
 
     private EntityManager entityManager;
+    private AccessService accessLog;
+    private UserService userService;
+Timestamp now  = new Timestamp(System.currentTimeMillis());
+
 
     //inject entity manager using constructor injection
-
-    public MissionDOAImpl(EntityManager entityManager) {
+@Autowired
+    public MissionDOAImpl(EntityManager entityManager , AccessService accesslog , UserService userService ) {
         this.entityManager = entityManager;
+        this.accessLog=accesslog;
+        this.userService=userService;
 
     }
 
@@ -33,12 +42,11 @@ public class MissionDOAImpl implements MissionDOA {
     }
 
     @Override
-    public List<Mission> findMissionByName(String name) {
+    public Mission findMissionByName (String name) {
         TypedQuery<Mission> myQuery = entityManager.createQuery("FROM Mission WHERE missionName=:theData", Mission.class);
-
         myQuery.setParameter("theData", name);
+        return myQuery.getSingleResult();
 
-        return myQuery.getResultList();
     }
 
     @Override
@@ -50,7 +58,7 @@ public class MissionDOAImpl implements MissionDOA {
     }
 
     @Override
-    public List<Mission> missionStatus (Boolean status) {
+    public List<Mission> findByMissionStatus (Boolean status) {
         TypedQuery<Mission> theQuery = entityManager.createQuery("FROM Mission WHERE isActive=:theData", Mission.class);
         theQuery.setParameter("theData", status);
         return theQuery.getResultList();
@@ -61,7 +69,7 @@ public class MissionDOAImpl implements MissionDOA {
       return  entityManager.find(Mission.class,id);
 
     }
-
+@Transactional
     @Override
     public void updateMissionStaus(String missionName, String newStatus) {
         TypedQuery<Mission> myQuery=entityManager.createQuery("FROM Mission WHERE missionName =:theData",Mission.class);
@@ -78,6 +86,27 @@ public class MissionDOAImpl implements MissionDOA {
       }else{
           System.out.println("No Mission found");
       }
+    }
+
+    @Override
+    public List<Mission> findAllByUser(String EmpId) {
+        TypedQuery<Mission>myQuery=entityManager.createQuery("FROM Mission WHERE created_by_userid =:theData",Mission.class);
+        myQuery.setParameter("theData",EmpId);
+       return  myQuery.getResultList();
+    }
+
+    @Override
+    public Boolean MissionAlreadyExistIgnoreCaseSensitiveSpace(String missionName) {
+    // Database data vs User entry data
+        //Count gives number of results instead of the data itself
+     String jpql = "SELECT COUNT(Mission) FROM Mission Mission " + "WHERE LOWER(REPLACE(Mission.missionName,' ','')) =LOWER(REPLACE(:theData,' ',''))";
+
+     TypedQuery<Long>myQuery=entityManager.createQuery(jpql,Long.class);
+     myQuery.setParameter("theData",missionName);
+     Long count= myQuery.getSingleResult();
+     if (count>0){
+         return true;
+     }else return false;
     }
 
 

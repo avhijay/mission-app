@@ -1,15 +1,16 @@
-package com.missionplanner.mission_app.DOA;
+package com.missionplanner.mission_app.DAO;
 
 import com.missionplanner.mission_app.entity.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
-
+@Repository
 public class UserDOAImpl implements UserDOA{
-
+    Timestamp now = new Timestamp(System.currentTimeMillis());
     private EntityManager entityManager;
     public UserDOAImpl(EntityManager entityManager){
         this.entityManager=entityManager;
@@ -40,7 +41,7 @@ public class UserDOAImpl implements UserDOA{
 
 
 
-
+@Transactional
     @Override
     public void updateUserStatus(String empId, String newStatus) {
 
@@ -50,7 +51,7 @@ public class UserDOAImpl implements UserDOA{
         user.setEmploymentStatus(newStatus);
 
     }
-
+@Transactional
     @Override
     public void updateUserAccessLevel(String empId, int newLevel) {
 
@@ -60,7 +61,7 @@ public class UserDOAImpl implements UserDOA{
         user.setAccessLevel(newLevel);
 
     }
-
+@Transactional
     @Override
     public void updateUserTitle(String empId, String newStatus) {
         TypedQuery<User> myQuery = entityManager.createQuery("FROM User WHERE employementId =:theData",User.class);
@@ -70,7 +71,7 @@ public class UserDOAImpl implements UserDOA{
 
 
     }
-
+@Transactional
     @Override
     public void setUserTermination(String empId, Timestamp terminatedAt) {
         TypedQuery<User> myQuery = entityManager.createQuery("FROM User WHERE employementId =:theData",User.class);
@@ -80,16 +81,15 @@ public class UserDOAImpl implements UserDOA{
 
     }
 
+    @Override
+    public Integer getAccessLvl(String empId) {
+        TypedQuery<User> myQuery=entityManager.createQuery("FROM User WHERE rmployementId =:theData",User.class);
+        myQuery.setParameter("theData",empId);
+        User user=myQuery.getSingleResult();
+        return user.getAccessLevel();
+    }
+
 
 }
 
 
-//@Override
-//public Boolean hasAccessToMission(int userId, int missionClearanceLevel) {
-//    Users user = userRepository.findById(userId).orElse(null);
-//    if (user == null) {
-//        return false;
-//    }
-//
-//    return user.getAcessLevel() >= missionClearanceLevel;
-//}

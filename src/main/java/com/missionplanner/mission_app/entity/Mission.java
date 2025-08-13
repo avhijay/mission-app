@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 public class Mission {
     //Adding Fields
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -46,21 +47,25 @@ public class Mission {
     private String password;
 
     @Column(name="Allowed_Clearancelevel")
-    private String allowedClearanceLevel;
+    private Integer allowedClearanceLevel;
 
     @Column(name = "Live_Feed_Url")
     private String liveFeedUrl;
 
     @Column(name = "Is_Live_Enabled")
     private Boolean isLiveEnabled;
+
+    @ManyToOne
+    @JoinColumn( name ="created_by_userid", referencedColumnName = "employment_id", nullable = false)
+    private User createdBy;
 //Constructors
 
     public Mission() {
     }
 
-    public Mission(String location, String missionName, String terrain, String weather, Integer duration, String missionType, String equipmentLevel, String operativeName, Double budget, String status, String password, String allowedClearanceLevel, String liveFeedUrl,  Boolean isLiveEnabled) {
-        this.location = location;
+    public Mission(String missionName, String location, String terrain, String weather, Integer duration, String missionType, String equipmentLevel, String operativeName, Double budget, String status, String password, Integer allowedClearanceLevel, String liveFeedUrl, Boolean isLiveEnabled, User createdBy) {
         this.missionName = missionName;
+        this.location = location;
         this.terrain = terrain;
         this.weather = weather;
         this.duration = duration;
@@ -73,9 +78,18 @@ public class Mission {
         this.allowedClearanceLevel = allowedClearanceLevel;
         this.liveFeedUrl = liveFeedUrl;
         this.isLiveEnabled = isLiveEnabled;
+        this.createdBy = createdBy;
     }
 
-    //Getters and Setters
+//Getters and Setters
+
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
+    }
 
     public int getId() {
         return id;
@@ -149,11 +163,11 @@ public class Mission {
         Budget = budget;
     }
 
-    public String getAllowedClearanceLevel() {
+    public Integer getAllowedClearanceLevel() {
         return allowedClearanceLevel;
     }
 
-    public void setAllowedClearanceLevel(String allowedClearanceLevel) {
+    public void setAllowedClearanceLevel(Integer allowedClearanceLevel) {
         this.allowedClearanceLevel = allowedClearanceLevel;
     }
 

@@ -12,5 +12,6 @@ public interface UserService {
     void save(User user);
     void updateStatus(String empId, String newStatus);
     void updateAccessLevel(String empId, int level);
-    boolean hasAccessToMission(String empId, int requiredLevel);
+    boolean hasAccessToMission(String empId, int requiredLevel,String MissionName);
+    boolean hasAdminPrivilege(String empId);
 }

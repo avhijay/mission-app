@@ -1,4 +1,4 @@
-package com.missionplanner.mission_app.DOA;
+package com.missionplanner.mission_app.DAO;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -19,5 +19,6 @@ public interface UserDOA {
 
     void setUserTermination(String empId, Timestamp terminatedAt);
 
+    Integer getAccessLvl(String empId);
 
 }

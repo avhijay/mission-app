@@ -11,14 +11,16 @@ CREATE TABLE missions (
     Budget DOUBLE,
     Activity_Status VARCHAR(50) NOT NULL   DEFAULT 'active' CHECK (Activity_Status IN ('active', 'nonactive')),
     access_Password VARCHAR(255) NOT NULL,
-    Allowed_Clearancelevel VARCHAR(255) NOT NULL
+    Allowed_Clearancelevel INT NOT NULL
      CHECK (Allowed_Clearancelevel IN (
-          '1 STAR', '2 STAR', '3 STAR', '4 STAR', '5 STAR', '6 STAR', '7 STAR'
+          1,2,3,4,5,6,7
         )
         ),
 
     Live_Feed_Url VARCHAR(255),
-    Is_Live_Enabled BOOLEAN
+    Is_Live_Enabled BOOLEAN,
+    created_by_userid VARCHAR(50) NOT NULL,
+    CONSTRAINT fk_created_by_id FOREIGN KEY (created_by_userid) REFERENCES USERS(employment_id)
 
 
 );
